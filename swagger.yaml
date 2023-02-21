@@ -1,91 +1,86 @@
-swagger: '2.0'
+openapi: 3.0.1
 info:
-  version: '1.0'
-  title: "fastapi-demo"
+  title: fastapi-demo
   description: FastAPI demo API specification
-host: fastapi.demo.org
-basePath: /
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  version: '1.0'
+servers:
+  - url: 'https://fastapi.demo.org/'
 paths:
   /mappings:
-    x-summary: Mappings Collection
     get:
       summary: Get mappings from graph DB
       responses:
-        200:
+        '200':
           description: A success response
-          schema:
-            $ref: '#/definitions/GraphMappingResponse'
-
-definitions:
-  GraphMapping:
-    title: A mapping
-    type: object
-    properties:
-      entry_id:
-        title: Entry ID
-        description: A PDB entry ID
-        type: string
-        example: 1A0A
-      entity_id:
-        title: Entity ID
-        description: A PDB entity ID
-        type: integer
-        example: 1
-      pdb_start:
-        title: PDB start residue
-        description: A PDB start residue
-        type: integer
-        example: 11
-      pdb_end:
-        title: PDB end residue
-        description: A PDB end residue
-        type: integer
-        example: 20
-      unp_start:
-        title: UniProt start residue
-        description: A UniProt start residue
-        type: integer
-        example: 11
-      unp_end:
-        title: UniProt end residue
-        description: A UniProt end residue
-        type: integer
-        example: 20
-      struct_asym_id:
-        title: PDB chain ID
-        description: A PDB chain ID
-        type: string
-        example: A
-      auth_asym_id:
-        title: PDB author chain ID
-        description: A PDB author chain ID
-        type: string
-        example: B
-      identity:
-        title: Mapping identity
-        description: Mapping identity
-        type: number
-        minimum: 0
-        maximum: 1
-        example: 0.9
-        
-  GraphMappingResponse:
-    title: A mapping response
-    type: object
-    properties:
-      accession:
-        title: UniProt accession
-        description: A UniProt accession
-        type: string
-        example: Q14676
-      mappings:
-        title: List of mappings
-        type: array
-        items:
-          $ref: '#/definitions/GraphMapping'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphMappingResponse'
+    x-summary: Mappings Collection
+components:
+  schemas:
+    GraphMapping:
+      title: A mapping
+      type: object
+      properties:
+        entry_id:
+          title: Entry ID
+          type: string
+          description: A PDB entry ID
+          example: 1A0A
+        entity_id:
+          title: Entity ID
+          type: integer
+          description: A PDB entity ID
+          example: 1
+        pdb_start:
+          title: PDB start residue
+          type: integer
+          description: A PDB start residue
+          example: 11
+        pdb_end:
+          title: PDB end residue
+          type: integer
+          description: A PDB end residue
+          example: 20
+        unp_start:
+          title: UniProt start residue
+          type: integer
+          description: A UniProt start residue
+          example: 11
+        unp_end:
+          title: UniProt end residue
+          type: integer
+          description: A UniProt end residue
+          example: 20
+        struct_asym_id:
+          title: PDB chain ID
+          type: string
+          description: A PDB chain ID
+          example: A
+        auth_asym_id:
+          title: PDB author chain ID
+          type: string
+          description: A PDB author chain ID
+          example: B
+        identity:
+          title: Mapping identity
+          maximum: 1
+          minimum: 0
+          type: number
+          description: Mapping identity
+          example: 0.9
+    GraphMappingResponse:
+      title: A mapping response
+      type: object
+      properties:
+        accession:
+          title: UniProt accession
+          type: string
+          description: A UniProt accession
+          example: Q14676
+        mappings:
+          title: List of mappings
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphMapping'
