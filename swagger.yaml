@@ -1,0 +1,91 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: "fastapi-demo"
+  description: FastAPI demo API specification
+host: fastapi.demo.org
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /mappings:
+    x-summary: Mappings Collection
+    get:
+      summary: Get mappings from graph DB
+      responses:
+        200:
+          description: A success response
+          schema:
+            $ref: '#/definitions/GraphMappingResponse'
+
+definitions:
+  GraphMapping:
+    title: A mapping
+    type: object
+    properties:
+      entry_id:
+        title: Entry ID
+        description: A PDB entry ID
+        type: string
+        example: 1A0A
+      entity_id:
+        title: Entity ID
+        description: A PDB entity ID
+        type: integer
+        example: 1
+      pdb_start:
+        title: PDB start residue
+        description: A PDB start residue
+        type: integer
+        example: 11
+      pdb_end:
+        title: PDB end residue
+        description: A PDB end residue
+        type: integer
+        example: 20
+      unp_start:
+        title: UniProt start residue
+        description: A UniProt start residue
+        type: integer
+        example: 11
+      unp_end:
+        title: UniProt end residue
+        description: A UniProt end residue
+        type: integer
+        example: 20
+      struct_asym_id:
+        title: PDB chain ID
+        description: A PDB chain ID
+        type: string
+        example: A
+      auth_asym_id:
+        title: PDB author chain ID
+        description: A PDB author chain ID
+        type: string
+        example: B
+      identity:
+        title: Mapping identity
+        description: Mapping identity
+        type: number
+        minimum: 0
+        maximum: 1
+        example: 0.9
+        
+  GraphMappingResponse:
+    title: A mapping response
+    type: object
+    properties:
+      accession:
+        title: UniProt accession
+        description: A UniProt accession
+        type: string
+        example: Q14676
+      mappings:
+        title: List of mappings
+        type: array
+        items:
+          $ref: '#/definitions/GraphMapping'
