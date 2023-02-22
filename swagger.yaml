@@ -16,16 +16,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HelloWorld'
-  /mappings:
+  /mappings/{accession}:
     get:
-      summary: Get mappings from graph DB
+      summary: Get PDB mappings
+      parameters:
+        - name: accession
+          in: path
+          description: UniProt accession
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: A success response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GraphMappingResponse'
+                $ref: '#/components/schemas/MappingResponse'
     x-summary: Mappings Collection
 components:
   schemas:
@@ -40,7 +47,7 @@ components:
           example: Hello world
       required:
         - message
-    GraphMapping:
+    Mapping:
       title: A mapping
       type: object
       properties:
@@ -101,7 +108,7 @@ components:
         - struct_asym_id
         - auth_asym_id
         - identity
-    GraphMappingResponse:
+    MappingResponse:
       title: A mapping response
       type: object
       properties:
@@ -114,7 +121,7 @@ components:
           title: List of mappings
           type: array
           items:
-            $ref: '#/components/schemas/GraphMapping'
+            $ref: '#/components/schemas/Mapping'
       required:
         - accession
         - mappings
