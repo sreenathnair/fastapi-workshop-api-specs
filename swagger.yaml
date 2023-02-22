@@ -6,6 +6,16 @@ info:
 servers:
   - url: 'https://fastapi.demo.org/'
 paths:
+  /:
+    get:
+      summary: Hello world root
+      responses:
+        '200':
+          description: A sample hello world response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelloWorld'
   /mappings:
     get:
       summary: Get mappings from graph DB
@@ -19,6 +29,17 @@ paths:
     x-summary: Mappings Collection
 components:
   schemas:
+    HelloWorld:
+      title: A sample schema
+      type: object
+      description: A sample object
+      properties:
+        message:
+          type: string
+          title: A sample message
+          example: Hello world
+      required:
+        - message
     GraphMapping:
       title: A mapping
       type: object
@@ -70,6 +91,16 @@ components:
           type: number
           description: Mapping identity
           example: 0.9
+      required:
+        - entry_id
+        - entity_id
+        - pdb_start
+        - pdb_end
+        - unp_start
+        - unp_end
+        - struct_asym_id
+        - auth_asym_id
+        - identity
     GraphMappingResponse:
       title: A mapping response
       type: object
@@ -84,3 +115,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GraphMapping'
+      required:
+        - accession
+        - mappings
